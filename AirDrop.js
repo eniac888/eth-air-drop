@@ -1,16 +1,17 @@
 var succTrans = new Array();
 var failTrans = new Array();
 
-function doTransfer() {
+function doTransfer(contOwner, ownerPwd) {
     //var nonce_ = 1001;
-    var macc = eth.accounts[0];
-    web3.personal.unlockAccount(macc, "q1w2e3r4t5");
+    //var macc = eth.accounts[0];
+    web3.personal.unlockAccount(contOwner, ownerPwd);
 
     var lastpos = 0, batchLen = 100;
     var execBatch = function() {
         console.log('lastpos:' + lastpos);
         var batch = bills.slice(lastpos, lastpos + batchLen);
         //console.log(batch);
+        web3.personal.unlockAccount(contOwner, ownerPwd);
         batch.forEach(function (bill) {
             var addr = bill.addr;
             var bal = bill.bal;
