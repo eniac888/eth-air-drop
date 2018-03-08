@@ -4,8 +4,6 @@ reload(sys)
 sys.setdefaultencoding("utf8")
 
 import urllib, urllib2
-import re
-import csv
 from bs4 import BeautifulSoup
 import time
 
@@ -31,16 +29,21 @@ def numberpage():
     return int(page)
 
 
-def printTokenHolder(num):
+def printTokenHolder(num,file):
     soup=getHtml(num)
     tables = soup.findAll('table')
     tab = tables[0]
     for tr in tab.findAll('tr'):
         for td in tr.findAll('td'):
-            print td.getText(),
+            print td.getText()+"",
+            file.write(td.getText()+" ")
+        file.write("\n")
         print
+    time.sleep(3)
 
 if __name__ == '__main__':
     pages=numberpage()
     for num in range(1,pages+1):
-        printTokenHolder(num)
+        fo = open("TokenHander", "a+")
+        printTokenHolder(num,fo)
+        fo.close()
